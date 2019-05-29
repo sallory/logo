@@ -8,7 +8,9 @@ from rest_framework.views import APIView
 
 class Logos(APIView):
     def get(self, request):
-        q = self.request.query_params.get('q', None)
-        logos = Logo.objects.filter(logotags__tag__name=q)
+        tag = self.request.GET.getlist('tag', None)
+        logos = {}
+        if tag:
+            logos = Logo.objects.filter(logotags__tag__name__in=tag)
         serializer = LogoSerializer(logos, many=True)
         return Response(serializer.data)
