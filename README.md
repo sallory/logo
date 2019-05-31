@@ -4,9 +4,10 @@
 
 *  name logo
 
-*  владелец postgres
+*  user postgres, no password(по умолчанию)
 
-*  host localhost
+*  или переменная окружения DATABASE_URL в формате postgres://USER:PASSWORD@HOST:PORT/NAME
+
 
 Создание виртуального окружения из корня проекта(для мака python3, pip3):
 
@@ -26,9 +27,13 @@
 
 *  python manage.py runserver
 
-Создания суперюзера для админки:
+Создания superuser для админки(опционально):
 
 *  python manage.py createsuperuser
+
+Запуск теста:
+
+*  python manage.py test
 
 Создание данных:
 ```
