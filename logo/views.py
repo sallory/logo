@@ -4,6 +4,7 @@ from .models import Logo, Category, Tag, LogoTag
 from .serializers import LogoSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.pagination import LimitOffsetPagination
 
 
 class Logos(APIView):
@@ -15,7 +16,9 @@ class Logos(APIView):
             logos = logos.filter(logotags__tag__name__in=tag).distinct()
         if q:
             logos = logos.filter(name=q)
-        serializer = LogoSerializer(logos, many=True)
+        paginator = LimitOffsetPagination()
+        result_page = paginator.paginate_queryset(logos, request)
+        serializer = LogoSerializer(result_page, many=True, context={'request':request})
         return Response(serializer.data)
 
     def post(self, request):
